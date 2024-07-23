@@ -442,8 +442,7 @@ def Minimizer(zlim1=0,dip=None):
     def RESVF3_H0Dip_noscdep(  Hd,M0,ra= radip,dec=decdip,Q0=-4.885e-02,J0=-9.390e-01,DS=np.inf,stype = STYPE):#Total residual, \hat Z - Y_0
         
         if ZINDEX==8:
-            #Q0=-3.973e-01  
-            #J0=2.522e-01
+    
             
             #these values are from global fit 
             Q0=-2.414e-01 
@@ -454,27 +453,12 @@ def Minimizer(zlim1=0,dip=None):
             qm=-3.561e-02 
             J0=-1.039e+00
             
-            
-            #qm=-0.326 
-            #J0=-0.073 
-            #qm=-0.217
-            #J0= -0.356
-            #qm=-0.247
-            #J0=-0.303
-            #qm=-0.55
-            #J0=1
-        
         if ZINDEX==0:
 
             #these values are from global fit 
             qm=-3.331e-01
             J0=-1.787e-02 
-            
-            
-            #Q0=-0.3412
-            #J0=0.0179
 
-       
         #M0=-19.30
         Hm=70
         #M0=-19.30
@@ -583,7 +567,7 @@ def Minimizer(zlim1=0,dip=None):
 
    
 
-
+    ## intitalizing priors
     pre_found_best=[-1.93145269e+01 ,0.03  ]
 
     bounds=((-21,-16),(None,None))
@@ -692,7 +676,7 @@ def Minimizer(zlim1=0,dip=None):
     print(bounds)
     print(pre_found_best)
     
-    if options.SCANSHELLDIPOLE:
+    if options.SCANSHELLDIPOLE:  ## if using constraints option, use method trust constraint or SLSQP
        MLE = optimize.minimize(m2loglike, pre_found_best , method = met, tol=10**-14 , options={'maxiter':150000},bounds=bounds,constraints=({'type':'eq','fun':No_dip}))
     else:
         
@@ -722,7 +706,7 @@ Z=Z[Z['zHEL']<0.8]
 N=len(Z)
 median=[]
 if options.FIXA>0: 
-    
+    ## for shell analysis 
     if not options.SCANSHELLDIPOLE:
        
         shell_width=100
@@ -754,7 +738,8 @@ if options.FIXA>0:
             
             print(ar)
     else:
-        
+        ## this for estimating confidence intervals in shell analysis using wilk's theorem 
+        ## replace with your best fir values
          minimized_vals=[-38.86159740622688, -17.75354867779298, -8.208273573258992, -4.939017455520776, -4.178077420293118, -2.0032140695565652, -1.615233331256633, -0.7150906154827132, -0.1989928683734748, -0.044427387791486014, -0.14111061623341775, -0.3974002660681623, -0.0460520876681514, -0.11531701124053621, -0.2090319705703124, -0.011274688511929136, -0.057884518346162525]
          MLE=[342.76973980211324, -57.65151182449563, -51.79681046385484, -87.71259784624718, -84.76411854459579, -97.83179766640306, -105.91089817848456, -107.31134428317338, -106.5501546363131, -85.36903374173403, -97.60385279482867, -102.87869020484587, -93.4912505041787, -109.57416129361042, -84.22649126879598, -63.06914507196426, -54.34585282946863]
 
