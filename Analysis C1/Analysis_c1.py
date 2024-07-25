@@ -176,7 +176,12 @@ def Minimizer(zlim1=0,dip=None):
     l=np.array(l)
     med= np.median(Z['zHEL'])
     Z=Z.to_numpy()
-    ZINDEX=options.ZINDEX
+    if options.ZINDEX not in INDEX_DCT.keys():
+        print("Wrong Redshift Index")
+        sys.exit(1)
+    else:
+        ZINDEX=options.ZINDEX
+    
     
     
     zlim=Z[0,ZINDEX]
